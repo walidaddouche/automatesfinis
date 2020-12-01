@@ -21,13 +21,14 @@ test = automaton.Automaton("Test")  # create a empty automate
 test.add_transition("0", "b", "1")
 test.add_transition("1", "b", "1")
 test.add_transition("1", "a", "2")
-test.add_transition("2", "b", "2")
+test.add_transition("2", "b", "3")
+# test.add_transition("3", "%", "3")
 
 test.make_accept("2")
 test.to_graphviz("test.gv")
 
 
-def count_element(Word: str):  # méthode qui compte le nombre d"état
+def count_element(Word: str) : # méthode qui compte le nombre d"état
     count = 1
     for i in range(len(Word)):
         if Word[i] == ",":
@@ -35,7 +36,7 @@ def count_element(Word: str):  # méthode qui compte le nombre d"état
     return count
 
 
-def is_det(automate: automaton.Automaton):
+def is_det(automate: automaton.Automaton)-> bool:
     boolean = True
     for i in range(len(automate.states)):
         for j in range(len(automate.alphabet)):
@@ -43,18 +44,15 @@ def is_det(automate: automaton.Automaton):
                 if count_element((",".join(map(lambda x: str(x), automate.statesdict[automate.states[i]].transitions[
                     automate.alphabet[j]])))) > 1:
                     boolean = False
-                elif count_element((",".join(map(lambda x: str(x), automate.statesdict[automate.states[i]].transitions[
-                    "%"])))) > 1:
+                elif (",".join(map(lambda x: str(x), automate.statesdict[automate.states[i]].transitions[
+                    "%"]))):
                     boolean = False
             except KeyError:
                 pass
     return boolean
 
 
-print(is_det(test))
-
-
-def is_word_inside(automate: automaton.Automaton, mot: str):
+def is_word_inside(automate: automaton.Automaton, mot: str)->bool or str:
     if is_det(automate):
         etat_initiale = automate.initial
         lista = list(mot)
@@ -77,7 +75,7 @@ def is_word_inside(automate: automaton.Automaton, mot: str):
         return "ERROR \n votre automate n'est pas un atomate déterministe "
 
 
-def final_method(chemin_vers_le_fichier: str, Word: str):
+def final_method(chemin_vers_le_fichier: str, Word: str) -> str :
     Auto = automaton.Automaton("test")  # create an empty automate
     Auto.from_txtfile(chemin_vers_le_fichier)
     if not is_det(Auto):
@@ -88,11 +86,3 @@ def final_method(chemin_vers_le_fichier: str, Word: str):
         else:
             return "NO"
 
-
-automatonfile = sys.argv[1]
-word = str(sys.argv[2])
-print(final_method(automatonfile, word))
-
-# mot = input("le mot que vous chechez")
-# chemin = input("le chemin vers l'automate")
-# print(final_method(chemin,mot))&
