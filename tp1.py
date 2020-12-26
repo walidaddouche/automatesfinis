@@ -36,7 +36,7 @@ def count_element(Word: str) : # méthode qui compte le nombre d"état
     return count
 
 
-def is_det(automate: automaton.Automaton)-> bool:
+def is_det(automate: automaton.Automaton)-> bool: # méthode qui retourne True si l'automate est deterministe sinon elle retourne False
     boolean = True
     for i in range(len(automate.states)):
         for j in range(len(automate.alphabet)):
