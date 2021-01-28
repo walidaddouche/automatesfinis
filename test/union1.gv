@@ -1,0 +1,14 @@
+digraph finite_state_machine {
+  rankdir=LR;  
+  size="8,5"  label="a1star_a2_or_a3"  node [shape = doublecircle]; "1" "4";
+  node [shape = circle];
+  __I__ [label="", style=invis, width=0]
+  __I__ -> "2"
+  "2" -> "0" [label = ε];
+  "2" -> "3" [label = ε];
+  "0" -> "1" [label = b];
+  "3" -> "3" [label = b];
+  "3" -> "4" [label = a];
+  "4" -> "4" [label = a];
+  "4" -> "4" [label = b];
+}
